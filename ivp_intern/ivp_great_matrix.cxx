@@ -2136,7 +2136,17 @@ IVP_RETURN_TYPE IVP_Great_Matrix_Many_Zero::invert(IVP_Great_Matrix_Many_Zero *d
     IVP_ASSERT(dest->columns == this->columns);
 
 #if defined(IVP_NO_ALLOCA)
-    int index_vec[IVP_MAX_GREAT_MATRIX_SIZE];
+#include <cstdlib>
+
+// At the location of the error, replace:
+int *index_vec=(int*)alloca( columns*sizeof(IVP_DOUBLE) );
+
+// With:
+#ifdef __APPLE__
+    int *index_vec = (int*)__builtin_alloca(columns * sizeof(IVP_DOUBLE));
+#else
+    int *index_vec = (int*)alloca(columns * sizeof(IVP_DOUBLE));
+#endif
     IVP_ASSERT( columns < IVP_MAX_GREAT_MATRIX_SIZE);
 #else    
     int *index_vec=(int*)alloca( columns*sizeof(IVP_DOUBLE) );
