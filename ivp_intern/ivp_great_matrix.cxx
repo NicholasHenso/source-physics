@@ -1,4 +1,6 @@
-#include <alloca.h>
+#ifndef alloca
+    #define alloca __builtin_alloca
+#endif
 // Copyright (C) Ipion Software GmbH 1999-2000. All rights reserved.
 #ifdef IVP_WILLAMETTE
 #include <emmintrin.h>
